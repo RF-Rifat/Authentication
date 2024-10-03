@@ -6,13 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
 import {
   Card,
@@ -24,7 +17,6 @@ import {
 import { Label } from "@/components/ui/label";
 import { Icons } from "./ui/icon";
 import { registerSchema } from "@/lib/validation";
-
 
 type RegisterInput = z.infer<typeof registerSchema>;
 
@@ -114,7 +106,7 @@ export default function RegisterForm() {
               </p>
             )}
           </div>
-          <div className="space-y-2">
+          {/* <div className="space-y-2">
             <Label htmlFor="role">Role</Label>
             <Select {...register("role")}>
               <SelectTrigger>
@@ -126,7 +118,7 @@ export default function RegisterForm() {
                 <SelectItem value="super_admin">Super Admin</SelectItem>
               </SelectContent>
             </Select>
-          </div>
+          </div> */}
           <Button type="submit" className="w-full" disabled={isLoading}>
             {isLoading && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />

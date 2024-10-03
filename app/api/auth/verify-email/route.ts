@@ -1,20 +1,14 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { connect } from "@/lib/mongodb";
 import User from "@/model/User";
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextRequest, NextResponse } from "next/server";
 
-
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  if (req.method !== "GET") {
-    return res.status(405).json({ message: "Method not allowed" });
-  }
-
-  const { token } = req.query;
-
-  if (!token || typeof token !== "string") {
-    return res.status(400).json({ message: "Invalid token" });
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const token = searchParams.get("token");
+  console.log("token",token)
+  if (!token) {
+    return NextResponse.json({ message: "Invalid token" }, { status: 400 });
   }
 
   try {
@@ -23,16 +17,26 @@ export default async function handler(
     const user = await User.findOne({ verificationToken: token });
 
     if (!user) {
-      return res.status(400).json({ message: "Invalid or expired token" });
+      return NextResponse.json(
+        { message: "Invalid or expired token" },
+        { status: 400 }
+      );
     }
 
     user.isEmailVerified = true;
-    user.verificationToken = null;
+    //@ts-ignore
+    user.verificationToken = undefined;
     await user.save();
 
-    res.status(200).json({ message: "Email verified successfully" });
+    return NextResponse.json(
+      { message: "Email verified successfully" },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Email verification error:", error);
-    res.status(500).json({ message: "Error verifying email" });
+    return NextResponse.json(
+      { message: "Error verifying email" },
+      { status: 500 }
+    );
   }
 }

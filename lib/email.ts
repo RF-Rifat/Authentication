@@ -1,9 +1,10 @@
 import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
-  // Configure your email service here
-  // For example, using Gmail:
   service: "gmail",
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
@@ -12,7 +13,7 @@ const transporter = nodemailer.createTransport({
 
 export async function sendVerificationEmail(to: string, token: string) {
   const verificationUrl = `${process.env.NEXT_PUBLIC_APP_URL}/verify-email?token=${token}`;
-
+  console.log(process.env.EMAIL_USER, process.env.EMAIL_PASS);
   const mailOptions = {
     from: process.env.EMAIL_FROM,
     to,
