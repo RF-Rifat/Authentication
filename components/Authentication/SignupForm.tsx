@@ -11,12 +11,14 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { Icons } from "./ui/icon";
+import { Icons } from "../ui/icon";
 import { registerSchema } from "@/lib/validation";
+import Link from "next/link";
 
 type RegisterInput = z.infer<typeof registerSchema>;
 
@@ -46,12 +48,12 @@ export default function RegisterForm() {
         throw new Error(result.message);
       }
     } catch (error) {
-     toast({
-       title: "Registration Failed",
-       description:
-         error instanceof Error ? error.message : "An unknown error occurred",
-       variant: "destructive",
-     });
+      toast({
+        title: "Registration Failed",
+        description:
+          error instanceof Error ? error.message : "An unknown error occurred",
+        variant: "destructive",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -127,6 +129,14 @@ export default function RegisterForm() {
           </Button>
         </form>
       </CardContent>
+      <CardFooter className="flex justify-center">
+        <p className="text-sm text-gray-600">
+          Don&apos;t have an account?{" "}
+          <Link href="/login" className="text-blue-600 hover:underline">
+            Login
+          </Link>
+        </p>
+      </CardFooter>
     </Card>
   );
 }

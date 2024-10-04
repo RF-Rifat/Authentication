@@ -1,9 +1,3 @@
-import RegisterForm from "@/components/RegisterForm";
-
 export default function Home() {
-  return (
-    <div>
-      <RegisterForm />
-    </div>
-  );
+  return <div className="text-2xl">Home Page</div>;
 }
