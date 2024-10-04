@@ -46,12 +46,12 @@ export default function RegisterForm() {
         throw new Error(result.message);
       }
     } catch (error) {
-      toast({
-        title: "Registration Failed",
-        description:
-          error instanceof Error ? error.message : "An unknown error occurred",
-        variant: "destructive",
-      });
+     toast({
+       title: "Registration Failed",
+       description:
+         error instanceof Error ? error.message : "An unknown error occurred",
+       variant: "destructive",
+     });
     } finally {
       setIsLoading(false);
     }
